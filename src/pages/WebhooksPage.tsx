@@ -13,8 +13,8 @@ const PAYLOAD_EXAMPLES = {
   registrarEntrada: {
     label: "Registrar Entrada",
     method: "POST",
-    endpoint: "/webhook/entradas",
     request: {
+      acao: "registrarEntrada",
       id_produto: "PROD-001",
       quantidade: 10,
       valor_total: 89.90,
@@ -26,8 +26,8 @@ const PAYLOAD_EXAMPLES = {
   registrarSaida: {
     label: "Registrar Saída",
     method: "POST",
-    endpoint: "/webhook/saidas",
     request: {
+      acao: "registrarSaida",
       id_produto: "PROD-001",
       quantidade: 5,
       motivo: "Produção",
@@ -38,8 +38,8 @@ const PAYLOAD_EXAMPLES = {
   cadastrarProduto: {
     label: "Cadastrar Produto",
     method: "POST",
-    endpoint: "/webhook/produtos",
     request: {
+      acao: "cadastrarProduto",
       id_produto: "PROD-009",
       nome_produto: "Farinha de Trigo",
       categoria: "Grãos e Cereais",
@@ -190,7 +190,7 @@ export default function WebhooksPage() {
             <CardContent>
               <JsonBlock
                 data={PAYLOAD_EXAMPLES[selectedEvent as keyof typeof PAYLOAD_EXAMPLES].request}
-                label={`POST ${PAYLOAD_EXAMPLES[selectedEvent as keyof typeof PAYLOAD_EXAMPLES].endpoint}`}
+                label={`POST → Webhook URL`}
               />
             </CardContent>
           </Card>
@@ -207,7 +207,7 @@ export default function WebhooksPage() {
                   </Badge>
                   <CardTitle className="text-base">{example.label}</CardTitle>
                 </div>
-                <CardDescription className="font-mono text-xs">{example.endpoint}</CardDescription>
+                <CardDescription className="font-mono text-xs">Webhook URL única — roteamento pelo campo "acao"</CardDescription>
               </CardHeader>
               <CardContent className="space-y-4">
                 <JsonBlock data={example.request} label="Request Body" />
