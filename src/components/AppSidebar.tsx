@@ -1,5 +1,5 @@
 import {
-  LayoutDashboard, Package, ArrowDownToLine, ArrowUpFromLine, AlertTriangle, LogOut,
+  LayoutDashboard, Package, ArrowDownToLine, ArrowUpFromLine, AlertTriangle, Settings, LogOut,
 } from "lucide-react";
 import { NavLink } from "@/components/NavLink";
 import { useLocation } from "react-router-dom";
@@ -14,6 +14,7 @@ const items = [
   { title: "Entradas", url: "/entradas", icon: ArrowDownToLine },
   { title: "Saídas", url: "/saidas", icon: ArrowUpFromLine },
   { title: "Alertas", url: "/alertas", icon: AlertTriangle },
+  { title: "Webhooks", url: "/webhooks", icon: Settings },
 ];
 
 export function AppSidebar() {
