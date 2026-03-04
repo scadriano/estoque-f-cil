@@ -21,6 +21,7 @@ export default function SaidasPage() {
   const [motivo, setMotivo] = useState<Saida["motivo"] | "">("");
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [confirmDialog, setConfirmDialog] = useState(false);
+  const [saving, setSaving] = useState(false);
 
   const produtosAtivos = produtos.filter(p => p.ativo);
   const produtoSelecionado = getProduto(idProduto);
@@ -35,17 +36,42 @@ export default function SaidasPage() {
     return Object.keys(e).length === 0;
   };
 
-  const doRegister = () => {
-    addSaida({
-      id: `S${Date.now()}`,
-      data_saida: data,
-      id_produto: idProduto,
-      quantidade: Number(quantidade),
-      motivo: motivo as Saida["motivo"],
-    });
-    toast.success("Movimentação registrada!");
-    setIdProduto(""); setQuantidade(""); setMotivo("");
-    setConfirmDialog(false);
+  const doRegister = async () => {
+    setSaving(true);
+    try {
+      const payload = {
+        acao: "registrarSaida",
+        id_produto: idProduto,
+        nome_produto: getProdutoNome(idProduto),
+        quantidade: Number(quantidade),
+        motivo: motivo,
+        data_saida: data,
+      };
+
+      const res = await fetch("https://hook.us2.make.com/nyrla912vy1dpkmf4g3jrxjl8cd2ghsi", {
+        method: "POST",
+        headers: { "Content-Type": "application/json", "Accept": "application/json" },
+        body: JSON.stringify(payload),
+      });
+
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
+
+      addSaida({
+        id: `S${Date.now()}`,
+        data_saida: data,
+        id_produto: idProduto,
+        quantidade: Number(quantidade),
+        motivo: motivo as Saida["motivo"],
+      });
+      toast.success("Entrada de novo produto registrada com sucesso.");
+      setIdProduto(""); setQuantidade(""); setMotivo("");
+    } catch (err) {
+      console.error("Erro ao registrar saída:", err);
+      toast.error("Erro ao registra entrada de produto. Tente novamente.");
+    } finally {
+      setSaving(false);
+      setConfirmDialog(false);
+    }
   };
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -110,7 +136,7 @@ export default function SaidasPage() {
               {errors.motivo && <p className="text-sm text-destructive mt-1">{errors.motivo}</p>}
             </div>
             <div className="flex items-end sm:col-span-2 lg:col-span-2">
-              <Button type="submit" className="w-full sm:w-auto">Registrar Saída</Button>
+              <Button type="submit" className="w-full sm:w-auto" disabled={saving}>{saving ? "Registrando..." : "Registrar Saída"}</Button>
             </div>
           </form>
         </CardContent>
