@@ -19,6 +19,7 @@ export default function EntradasPage() {
   const [valorTotal, setValorTotal] = useState("");
   const [notaFiscal, setNotaFiscal] = useState("");
   const [errors, setErrors] = useState<Record<string, string>>({});
+  const [saving, setSaving] = useState(false);
 
   const validate = () => {
     const e: Record<string, string> = {};
@@ -30,19 +31,45 @@ export default function EntradasPage() {
     return Object.keys(e).length === 0;
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!validate()) return;
-    addEntrada({
-      id: `E${Date.now()}`,
-      data_entrada: data,
-      id_produto: idProduto,
-      quantidade: Number(quantidade),
-      valor_total: Number(valorTotal),
-      nota_fiscal: notaFiscal,
-    });
-    toast.success("Movimentação registrada!");
-    setIdProduto(""); setQuantidade(""); setValorTotal(""); setNotaFiscal("");
+
+    setSaving(true);
+    try {
+      const payload = {
+        acao: "registrarEntrada",
+        id_produto: idProduto,
+        quantidade: Number(quantidade),
+        valor_total: Number(valorTotal),
+        nota_fiscal: notaFiscal,
+        data_entrada: data,
+      };
+
+      const res = await fetch("https://hook.us2.make.com/nyrla912vy1dpkmf4g3jrxjl8cd2ghsi", {
+        method: "POST",
+        headers: { "Content-Type": "application/json", "Accept": "application/json" },
+        body: JSON.stringify(payload),
+      });
+
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
+
+      addEntrada({
+        id: `E${Date.now()}`,
+        data_entrada: data,
+        id_produto: idProduto,
+        quantidade: Number(quantidade),
+        valor_total: Number(valorTotal),
+        nota_fiscal: notaFiscal,
+      });
+      toast.success("Entrada de novo produto registrada com sucesso.");
+      setIdProduto(""); setQuantidade(""); setValorTotal(""); setNotaFiscal("");
+    } catch (err) {
+      console.error("Erro ao registrar entrada:", err);
+      toast.error("Erro ao registra entrada de produto. Tente novamente.");
+    } finally {
+      setSaving(false);
+    }
   };
 
   const produtosAtivos = produtos.filter(p => p.ativo);
@@ -93,7 +120,7 @@ export default function EntradasPage() {
               <Input value={notaFiscal} onChange={e => setNotaFiscal(e.target.value)} placeholder="Opcional" />
             </div>
             <div className="flex items-end">
-              <Button type="submit" className="w-full">Registrar Entrada</Button>
+              <Button type="submit" className="w-full" disabled={saving}>{saving ? "Registrando..." : "Registrar Entrada"}</Button>
             </div>
           </form>
         </CardContent>
