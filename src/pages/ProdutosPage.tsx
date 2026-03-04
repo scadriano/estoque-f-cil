@@ -49,12 +49,48 @@ export default function ProdutosPage() {
     return Object.keys(e).length === 0;
   };
 
-  const handleSave = () => {
+  const [saving, setSaving] = useState(false);
+
+  const handleSave = async () => {
     if (!validate()) return;
-    if (isNew) addProduto(editando);
-    else updateProduto(editando);
-    setModalOpen(false);
-    toast.success(isNew ? "Produto cadastrado!" : "Produto atualizado!");
+
+    if (isNew) {
+      setSaving(true);
+      try {
+        const payload = {
+          acao: "cadastrarProduto",
+          id_produto: editando.id_produto,
+          nome_produto: editando.nome_produto,
+          categoria: editando.categoria,
+          unidade: editando.unidade,
+          estoque_atual: editando.estoque_atual,
+          estoque_minimo: editando.estoque_minimo,
+          custo_unitario: editando.custo_unitario,
+          fornecedor: editando.fornecedor,
+        };
+
+        const res = await fetch("https://hook.us2.make.com/nyrla912vy1dpkmf4g3jrxjl8cd2ghsi", {
+          method: "POST",
+          headers: { "Content-Type": "application/json", "Accept": "application/json" },
+          body: JSON.stringify(payload),
+        });
+
+        if (!res.ok) throw new Error(`HTTP ${res.status}`);
+
+        addProduto(editando);
+        setModalOpen(false);
+        toast.success("Produto cadastrado com sucesso.");
+      } catch (err) {
+        console.error("Erro ao cadastrar produto:", err);
+        toast.error("Erro ao cadastrar produto. Tente novamente.");
+      } finally {
+        setSaving(false);
+      }
+    } else {
+      updateProduto(editando);
+      setModalOpen(false);
+      toast.success("Produto atualizado!");
+    }
   };
 
   const handleInativar = (p: Produto) => {
@@ -192,7 +228,7 @@ export default function ProdutosPage() {
           </div>
           <DialogFooter>
             <Button variant="outline" onClick={() => setModalOpen(false)}>Cancelar</Button>
-            <Button onClick={handleSave}>Salvar</Button>
+            <Button onClick={handleSave} disabled={saving}>{saving ? "Salvando..." : "Salvar"}</Button>
           </DialogFooter>
         </DialogContent>
       </Dialog>
