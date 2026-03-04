@@ -14,7 +14,6 @@ const items = [
   { title: "Entradas", url: "/entradas", icon: ArrowDownToLine },
   { title: "Saídas", url: "/saidas", icon: ArrowUpFromLine },
   { title: "Alertas", url: "/alertas", icon: AlertTriangle },
-  { title: "Webhooks", url: "/webhooks", icon: Settings },
 ];
 
 export function AppSidebar() {

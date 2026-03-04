@@ -11,7 +11,7 @@ import ProdutosPage from "./pages/ProdutosPage";
 import EntradasPage from "./pages/EntradasPage";
 import SaidasPage from "./pages/SaidasPage";
 import AlertasPage from "./pages/AlertasPage";
-import WebhooksPage from "./pages/WebhooksPage";
+
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -31,7 +31,7 @@ const App = () => (
               <Route path="/entradas" element={<EntradasPage />} />
               <Route path="/saidas" element={<SaidasPage />} />
               <Route path="/alertas" element={<AlertasPage />} />
-              <Route path="/webhooks" element={<WebhooksPage />} />
+              
             </Route>
             <Route path="*" element={<NotFound />} />
           </Routes>
