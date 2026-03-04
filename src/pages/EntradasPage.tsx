@@ -40,6 +40,7 @@ export default function EntradasPage() {
       const payload = {
         acao: "registrarEntrada",
         id_produto: idProduto,
+        nome_produto: getProdutoNome(idProduto),
         quantidade: Number(quantidade),
         valor_total: Number(valorTotal),
         nota_fiscal: notaFiscal,
