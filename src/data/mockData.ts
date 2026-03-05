@@ -58,22 +58,6 @@ export const produtosIniciais: Produto[] = [
   { id_produto: "P008", nome_produto: "Copo Descartável", categoria: "Descartáveis", unidade: "Unidade", estoque_atual: 500, estoque_minimo: 100, custo_unitario: 0.10, fornecedor: "Descartáveis Ltda", ativo: true },
 ];
 
-const today = new Date().toISOString().split("T")[0];
-const yesterday = new Date(Date.now() - 86400000).toISOString().split("T")[0];
-const twoDaysAgo = new Date(Date.now() - 2 * 86400000).toISOString().split("T")[0];
+export const entradasIniciais: Entrada[] = [];
 
-export const entradasIniciais: Entrada[] = [
-  { id: "E001", data_entrada: today, id_produto: "P001", quantidade: 30, valor_total: 177.00, nota_fiscal: "NF-1234" },
-  { id: "E002", data_entrada: today, id_produto: "P003", quantidade: 15, valor_total: 630.00, nota_fiscal: "NF-1235" },
-  { id: "E003", data_entrada: yesterday, id_produto: "P006", quantidade: 48, valor_total: 216.00, nota_fiscal: "NF-1230" },
-  { id: "E004", data_entrada: yesterday, id_produto: "P007", quantidade: 100, valor_total: 150.00, nota_fiscal: "" },
-  { id: "E005", data_entrada: twoDaysAgo, id_produto: "P005", quantidade: 10, valor_total: 82.00, nota_fiscal: "NF-1228" },
-];
-
-export const saidasIniciais: Saida[] = [
-  { id: "S001", data_saida: today, id_produto: "P001", quantidade: 5, motivo: "Produção" },
-  { id: "S002", data_saida: today, id_produto: "P002", quantidade: 3, motivo: "Produção" },
-  { id: "S003", data_saida: yesterday, id_produto: "P004", quantidade: 4, motivo: "Produção" },
-  { id: "S004", data_saida: yesterday, id_produto: "P008", quantidade: 50, motivo: "Venda" },
-  { id: "S005", data_saida: twoDaysAgo, id_produto: "P003", quantidade: 2, motivo: "Perda" },
-];
+export const saidasIniciais: Saida[] = [];
