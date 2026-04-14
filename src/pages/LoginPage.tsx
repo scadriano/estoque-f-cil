@@ -43,10 +43,10 @@ export default function LoginPage() {
           <div className="mx-auto flex h-20 w-20 items-center justify-center rounded-xl overflow-hidden">
             <img src={foodLogo} alt="Prato de comida saudável" width={80} height={80} className="object-cover" />
           </div>
-          <CardTitle className="text-xl">Estoque de Restaurante</CardTitle>
-          <CardDescription>
-            {modo === "login" ? "Faça login para acessar o sistema" : "Crie uma nova conta"}
-          </CardDescription>
+          <CardTitle className="text-xl">Gerenciador de Estoque de Restaurante</CardTitle>
+          {modo === "cadastro" && (
+            <CardDescription>Crie uma nova conta</CardDescription>
+          )}
         </CardHeader>
         <CardContent>
           {modo === "login" ? (
