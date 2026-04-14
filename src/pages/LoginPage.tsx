@@ -4,7 +4,8 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
-import { Package, UserPlus } from "lucide-react";
+import { UserPlus } from "lucide-react";
+import foodLogo from "@/assets/food-logo.png";
 import { toast } from "sonner";
 
 const DEMO_USER = { usuario: "Adriano", senha: "sca452" };
