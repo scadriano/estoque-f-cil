@@ -27,7 +27,7 @@ export function AppSidebar() {
         <SidebarGroup>
           {!collapsed && (
             <SidebarGroupLabel className="text-sidebar-foreground/60 text-xs uppercase tracking-wider mb-2">
-              Gerenciador de Estoque de Restaurante
+              MENU PRINCIPAL
             </SidebarGroupLabel>
           )}
           <SidebarGroupContent>
