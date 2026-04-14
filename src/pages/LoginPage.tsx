@@ -4,7 +4,8 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
-import { Package, UserPlus } from "lucide-react";
+import { UserPlus } from "lucide-react";
+import foodLogo from "@/assets/food-logo.png";
 import { toast } from "sonner";
 
 const DEMO_USER = { usuario: "Adriano", senha: "sca452" };
@@ -39,8 +40,8 @@ export default function LoginPage() {
     <div className="min-h-screen flex items-center justify-center bg-muted p-4">
       <Card className="w-full max-w-sm shadow-lg">
         <CardHeader className="text-center space-y-2">
-          <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-xl bg-primary text-primary-foreground">
-            <Package className="h-7 w-7" />
+          <div className="mx-auto flex h-20 w-20 items-center justify-center rounded-xl overflow-hidden">
+            <img src={foodLogo} alt="Prato de comida saudável" width={80} height={80} className="object-cover" />
           </div>
           <CardTitle className="text-xl">Estoque de Restaurante</CardTitle>
           <CardDescription>
